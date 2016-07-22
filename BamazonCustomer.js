@@ -47,8 +47,11 @@ var runSearch = function() {
         }
         if(answer.quantity <= res[i].StockQuantity){
           var totalPurchase = answer.quantity * res[i].Price;
+          var remainingQuantity = res[i].StockQuantity - answer.quantity;
+          console.log("Remaining: " + remainingQuantity);
           console.log(totalPurchase.toFixed(2));//logs total limited to 2 decimal places
-          console.log("Sell Sell Sell!!!");
+          //console.log("Sell Sell Sell!!!");
+          updateQuant(remainingQuantity, res[i].ItemID);
         }else{
           console.log("Insufficient quantity");
         }
@@ -56,6 +59,17 @@ var runSearch = function() {
       });
 
   })
+}
+
+var updateQuant = function(quantity, itemID) {
+
+  var query = 'UPDATE Products SET ? WHERE ?';
+      connection.query(query, [{StockQuantity: quantity}, {ItemID: itemID}], function(err, res) {
+        if (err) throw err;
+        console.log(res);
+
+      });
+
 }
 
 // connection.end();
