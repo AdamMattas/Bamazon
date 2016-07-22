@@ -64,12 +64,12 @@ var runSearch = function() {
 var updateQuant = function(quantity, itemID) {
 
   var query = 'UPDATE Products SET ? WHERE ?';
+
       connection.query(query, [{StockQuantity: quantity}, {ItemID: itemID}], function(err, res) {
         if (err) throw err;
         console.log(res);
-
       });
 
 }
 
-// connection.end();
+//connection.end();
