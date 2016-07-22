@@ -14,35 +14,6 @@ connection.connect(function(err) {
   runSearch();
 })
 
-//Users should then be prompted with two messages. The first message should ask them the ID of the product they would like to buy. The second message should ask them how many of the product they would like to buy.
-
-// inquirer.prompt([
-
-//   {
-//     type: "input",
-//     name: "itemID",
-//     message: "Which product (ID) would you like to buy?"
-//   },
-//   {
-//     type: "input",
-//     name: "quantity",
-//     message: "How many would you like to buy?"
-//   }
-
-
-// ]).then(function(answers){
- 
-//   var query = 'SELECT ProductName, DepartmentName, Price, StockQuantity FROM Products WHERE ?';
-//   connection.query(query, {ItemID: answer.itemID}, function(err, res) {
-//       if (err) throw err;
-//       console.log(res);
-//       for (var i = 0; i < res.length; i++) {
-//           console.log('Product ID: ', res[i].ItemID, ' Product Name: ', res[i].ProductName, ' Available: ', res[i].StockQuantity);
-//       }
-//   });
-
-// })
-
 var runSearch = function() {
 
   var queryAll = 'SELECT * FROM Products';
@@ -71,9 +42,17 @@ var runSearch = function() {
       connection.query(query, {ItemID: answer.itemID}, function(err, res) {
         if (err) throw err;
         console.log(res);
-        for (var i = 0; i < res.length; i++) {
-            console.log('Product ID: ', res[i].ItemID, ' Product Name: ', res[i].ProductName, ' Available: ', res[i].StockQuantity);
+        for (var i in res) {
+            console.log('Product ID: ', res[i].ItemID, ' Product Name: ', res[i].ProductName, ' Price: ', res[i].Price, ' Available: ', res[i].StockQuantity);
         }
+        if(answer.quantity <= res[i].StockQuantity){
+          var totalPurchase = answer.quantity * res[i].Price;
+          console.log(totalPurchase.toFixed(2));//logs total limited to 2 decimal places
+          console.log("Sell Sell Sell!!!");
+        }else{
+          console.log("Insufficient quantity");
+        }
+
       });
 
   })
