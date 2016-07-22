@@ -113,3 +113,40 @@ var addInventory = function() {
   })
 
 }
+
+var addNewProduct = function() {
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "name",
+      message: "Enter the name of the product."
+    },
+    {
+      type: "input",
+      name: "department",
+      message: "Enter a department for this product."
+    },
+    {
+      type: "input",
+      name: "price",
+      message: "Enter the price for this product."
+    },
+    {
+      type: "input",
+      name: "quantity",
+      message: "Enter the quantity available for this product."
+    }
+  ]).then(function(answer) {
+      connection.query("INSERT INTO Products SET ?", {
+            ProductName: answer.name,
+            DepartmentName: answer.department,
+            Price: answer.price,
+            StockQuantity: answer.quantity
+        }, function(err, res) {
+            console.log("Your new product was added successfully!");
+            runManager();
+        });
+
+  })
+
+}
