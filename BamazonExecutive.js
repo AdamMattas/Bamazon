@@ -60,3 +60,29 @@ var viewProducts = function() {
   });
 
 }
+
+var createDept = function() {
+  inquirer.prompt([
+    {
+      type: "input",
+      name: "name",
+      message: "Enter the name of the department."
+    },
+    {
+      type: "input",
+      name: "overhead",
+      message: "Enter the overhead cost for this department."
+    }
+  ]).then(function(answer) {
+      connection.query("INSERT INTO Departments SET ?", {
+        DepartmentName: answer.name,
+        OverHeadCosts: answer.overhead,
+        TotalSales: 0.00
+      }, function(err, res) {
+        if (err) throw err;
+        console.log("Your new department was added successfully!");
+      });
+
+  })
+
+}
