@@ -38,31 +38,25 @@ var runExecutive = function() {
 
 var viewProducts = function() {
 
-  // instantiate 
-  var table = new Table({
-      head: ['DepartmentID', 'DepartmentName', 'OverHeadCosts', 'ProductSales', 'TotalProfit']
-    , colWidths: [25, 75]
-  });
+  var queryAll = 'SELECT * FROM Departments';
+ 
+  connection.query(queryAll, function(err, rows, fields) {
+    if (err) throw err;
 
-  var query = 'SELECT Departments.DepartmentID, Departments.DepartmentName, Departments.OverHeadCosts, Departments.TotalSales FROM Departments ';
-  query += 'INNER JOIN top5000 ON (topalbums.artist = top5000.artist AND topalbums.year = top5000.year) ';
-  query += 'WHERE (topalbums.artist = ? AND top5000.artist = ?) ORDER BY topalbums.year ';
+    var table = new Table({
+        head: ['DepartmentID', 'DepartmentName', 'OverHeadCosts', 'ProductSales', 'TotalProfit']
+      , colWidths: [15, 17, 15, 15, 15]
+    });
 
-  connection.query(query, [answer.artist, answer.artist], function(err, res) {
-    console.log(res.length + " matches found!");
-    for (var i = 0; i < res.length; i++) {
-        console.log("Album Position: " + res[i].position + " || Artist: " + res[i].artist + " || Song: " + res[i].song + " || Album: " + res[i].album + " || Year: " + res[i].year);
+    for (var i in rows) {
+      var profit = parseFloat(rows[i].TotalSales) - parseFloat(rows[i].OverHeadCosts);
+      table.push(
+          [rows[i].DepartmentID, rows[i].DepartmentName, rows[i].OverHeadCosts, rows[i].TotalSales, profit]
+      );
     }
-    
-    runSearch();
-  })
-   
-  // table is an Array, so you can `push`, `unshift`, `splice` and friends 
-  table.push(
-      ['First value', 'Second value']
-    , ['First value', 'Second value']
-  );
 
-  console.log(table.toString());
+    console.log(table.toString());
+
+  });
 
 }
