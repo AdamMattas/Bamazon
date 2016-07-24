@@ -41,7 +41,7 @@ var runSearch = function() {
       var query = 'SELECT ItemID, ProductName, DepartmentName, Price, StockQuantity FROM Products WHERE ?';
       connection.query(query, {ItemID: answer.itemID}, function(err, res) {
         if (err) throw err;
-        console.log(res);
+        //console.log(res);
         for (var i in res) {
             console.log('Product ID: ', res[i].ItemID, ' Product Name: ', res[i].ProductName, ' Price: ', res[i].Price, ' Available: ', res[i].StockQuantity);
         }
@@ -52,6 +52,7 @@ var runSearch = function() {
           console.log(totalPurchase.toFixed(2));//logs total limited to 2 decimal places
           //console.log("Sell Sell Sell!!!");
           updateQuant(remainingQuantity, res[i].ItemID);
+          updateDept(totalPurchase.toFixed(2), res[i].DepartmentName);
         }else{
           console.log("Insufficient quantity");
         }
@@ -65,10 +66,23 @@ var updateQuant = function(quantity, itemID) {
 
   var query = 'UPDATE Products SET ? WHERE ?';
 
-      connection.query(query, [{StockQuantity: quantity}, {ItemID: itemID}], function(err, res) {
-        if (err) throw err;
-        console.log(res);
-      });
+  connection.query(query, [{StockQuantity: quantity}, {ItemID: itemID}], function(err, res) {
+    if (err) throw err;
+    //console.log(res);
+  });
+
+}
+
+var updateDept = function(total, deptName) {
+
+  var query = 'UPDATE Departments SET ? WHERE ?';
+
+  connection.query(query, [{TotalSales: total}, {DepartmentName: deptName}], function(err, res) {
+    if (err) throw err;
+    //console.log(res);
+  });
+//   console.log(total);
+//   console.log(deptName);
 
 }
 
