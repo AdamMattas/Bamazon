@@ -14,4 +14,18 @@ The user can also track the total profit of a department after the overhead cost
 
 ---
 
+## BamazonCustomer.js
+
 ![Alt text](/readme_images/customer01.jpg?raw=true "BamazonCustomer.js")
+
+---
+
+## BamazonManager.js
+
+![Alt text](/readme_images/manager01.jpg?raw=true "BamazonManager.js")
+
+---
+
+## BamazonExecutive.js
+
+![Alt text](/readme_images/executive01.jpg?raw=true "BamazonExecutive.js")
