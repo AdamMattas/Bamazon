@@ -29,3 +29,9 @@ The user can also track the total profit of a department after the overhead cost
 ## BamazonExecutive.js
 
 ![Alt text](/readme_images/executive01.jpg?raw=true "BamazonExecutive.js")
+
+---
+
+## Additional Info
+
+Reference the Bamazon.sql file for the database structure used for this project
